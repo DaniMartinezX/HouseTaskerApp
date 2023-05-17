@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_primary20"
-    tools:context=".ui.view.fragments.HomeFragment">
+    android:background="@color/cardview_light_background"
+    tools:context=".ui.view.fragments.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HOME"
-        android:textColor="@color/white"
+        android:text="PROFILE"
         android:textSize="42sp"
         android:layout_gravity="center"/>
 

@@ -25,6 +25,6 @@ data class AssignmentEntity(
     @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "taskId") val taskId: Long?,
     @ColumnInfo(name = "assignmentDate") val assignmentDate: Long,
-    @ColumnInfo(name = "completed") val completed: Boolean,
+    @ColumnInfo(name = "completed") val completed: Boolean = false,
     @ColumnInfo(name = "memberId") val memberId: Long
 )
