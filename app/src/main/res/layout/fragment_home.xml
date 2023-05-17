@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_primary20"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_app"
     tools:context=".ui.view.fragments.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,8 +12,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HOME"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:textSize="42sp"
         android:layout_gravity="center"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:layout_gravity="end|bottom"
+        android:backgroundTint="@color/fab_color"
+        app:fabSize="normal"
+        android:src="@drawable/id_add"/>
 
 </FrameLayout>

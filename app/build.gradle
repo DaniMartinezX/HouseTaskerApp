@@ -54,6 +54,8 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.5.7"
     // Activity
     implementation "androidx.activity:activity-ktx:1.2.2"
+    //DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

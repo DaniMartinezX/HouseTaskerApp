@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">HouseTasker</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="fab_title">What do you want to manage?</string>
+    <string name="task">Task</string>
+    <string name="category">Category</string>
+    <string name="member">Member</string>
+    <string name="assignment">Assignment</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="subtitle_dark_mode">Activate the dark mode for a visual change</string>
+    <string name="title_notifications">Activate notifications</string>
+    <string name="subtitle_notifications">Turn on this option to get notifications from the app</string>
+    <string name="title_text_size_settings">Increase text font</string>
 </resources>
