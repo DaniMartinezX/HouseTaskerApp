@@ -19,4 +19,19 @@
     <string name="title_name">Name: </string>
     <string name="title_color">Color: </string>
     <string name="add">Add</string>
+    <string name="member_manager">Member manager</string>
+    <string name="photo">Photo:</string>
+    <string name="add_new_member_here">Add new member here</string>
+    <string name="add_new_category_here">Add new category here</string>
+    <string name="task_manager">Task manager</string>
+    <string name="add_new_task_here">Add new task here</string>
+    <string name="input_category">Category:</string>
+    <string name="expiration_date">Expiration:</string>
+    <string name="description">Description:</string>
+    <string name="add_new_assignment_here">Add new assignment here</string>
+    <string name="input_task">Task:</string>
+    <string name="input_member">Member:</string>
+    <string name="for_the_day">For the day...</string>
+    <string name="assignment_manager">Assignment manager</string>
+    <string name="back">Back</string>
 </resources>
