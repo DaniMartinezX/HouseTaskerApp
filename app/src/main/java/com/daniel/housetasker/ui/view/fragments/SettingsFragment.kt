@@ -3,10 +3,12 @@ package com.daniel.housetasker.ui.view.fragments
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -62,9 +64,13 @@ class SettingsFragment : Fragment() {
         }
 
         binding.rsTextSize.addOnChangeListener { _, value, _ ->
-            Log.i("Dani", "El valor es $value")
+            val textSizeBase = 16f // Tamaño de fuente base
+            val newSize = textSizeBase * value
+
             lifecycleScope.launch {
                 saveTextSize(value.toInt())
+                // Llamada al método para aumentar el tamaño de fuente de todos los TextView
+                increaseTextSizeForViews(binding.root, newSize)
             }
         }
 
@@ -80,6 +86,23 @@ class SettingsFragment : Fragment() {
             }
         }
     }
+
+
+    fun increaseTextSizeForViews(rootView: View, newSize: Float) {
+        if (rootView is TextView) {
+            rootView.setTextSize(TypedValue.COMPLEX_UNIT_SP, newSize)
+        }
+
+        if (rootView is ViewGroup) {
+            val childCount = rootView.childCount
+            for (i in 0 until childCount) {
+                val child = rootView.getChildAt(i)
+                increaseTextSizeForViews(child, newSize)
+            }
+        }
+    }
+
+
 
 
     private suspend fun saveTextSize(value: Int){

@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:layout_marginVertical="8dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -31,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dark_mode"
+                android:textStyle="bold"
                 android:textColor="@color/settings_text_title" />
 
             <TextView
@@ -53,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:layout_marginVertical="8dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -71,6 +74,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="@string/title_notifications"
                 android:textColor="@color/settings_text_title" />
 
@@ -99,6 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:layout_marginVertical="8dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -117,6 +122,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="@string/title_text_size_settings"
                 android:textColor="@color/settings_text_title" />
 
@@ -125,8 +131,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:valueFrom="1"
-                android:stepSize="1"
-                android:valueTo="5"/>
+                android:stepSize="0.1"
+                android:valueTo="2"/>
 
         </LinearLayout>
 
