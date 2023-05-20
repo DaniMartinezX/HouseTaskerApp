@@ -39,6 +39,7 @@
         <EditText
             android:id="@+id/etName"
             android:layout_width="180dp"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp" />
     </LinearLayout>
@@ -59,6 +60,7 @@
         <EditText
             android:id="@+id/etColor"
             android:layout_width="180dp"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp" />
     </LinearLayout>

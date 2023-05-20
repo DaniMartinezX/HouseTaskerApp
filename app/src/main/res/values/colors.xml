@@ -1,5 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Colores para el modo oscuro -->
+    <color name="my_dark_primary">#FF000000</color>
+    <color name="my_dark_background">#111D4A</color>
+    <color name="my_dark_surface">#FF111D4A</color>
+    <!-- Otros colores personalizados para el modo oscuro -->
+
+    <!-- Colores para el modo claro -->
+    <color name="my_light_primary_variant">#FFFFFFFF</color>
+    <color name="my_light_background">#FFF8F0</color>
+    <color name="my_light_surface">#FFFFFFFF</color>
+    <!-- Otros colores personalizados para el modo claro -->
+
+    <!-- Otros colores generales -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background_app">#111D4A</color>
@@ -7,4 +20,5 @@
     <color name="red">#92140C</color>
     <color name="text_color">#FFF8F0</color>
     <color name="settings_text_title">#10100F</color>
+
 </resources>

@@ -41,6 +41,7 @@
             android:id="@+id/etTask"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp" />
     </LinearLayout>
@@ -63,6 +64,7 @@
             android:id="@+id/etMember"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp" />
     </LinearLayout>
@@ -85,6 +87,7 @@
             android:id="@+id/etAssignmentDate"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp" />
     </LinearLayout>

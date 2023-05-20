@@ -1,5 +1,6 @@
 package com.daniel.housetasker.ui.view.fragments
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -18,6 +22,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import com.daniel.housetasker.data.database.settings.SettingsModel
 import com.daniel.housetasker.databinding.FragmentSettingsBinding
+import com.google.android.material.chip.ChipDrawable.Delegate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
@@ -36,6 +41,8 @@ class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private var firstTime:Boolean = true
+    private var isDarkModeEnabled = false
+
 
     private val binding get() = _binding!!
 
@@ -75,6 +82,12 @@ class SettingsFragment : Fragment() {
         }
 
         binding.switchDarkMode.setOnCheckedChangeListener { _, value ->
+            isDarkModeEnabled = value
+            if (value) {
+                enableDarkMode()
+            } else {
+                disableDarkMode()
+            }
             lifecycleScope.launch {
                 saveOptions(KEY_DARK_MODE, value)
             }
@@ -100,6 +113,16 @@ class SettingsFragment : Fragment() {
                 increaseTextSizeForViews(child, newSize)
             }
         }
+    }
+
+
+
+    private fun enableDarkMode(){
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+    }
+
+    private fun disableDarkMode(){
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
     }
 
 

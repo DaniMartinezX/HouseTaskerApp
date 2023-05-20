@@ -7,8 +7,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.daniel.housetasker.R
+import com.daniel.housetasker.data.database.entities.AssignmentEntity
 import com.daniel.housetasker.databinding.ActivityAssignmentManagerBinding
-import com.daniel.housetasker.databinding.ActivityTaskManagerBinding
 
 class AssignmentManagerActivity : AppCompatActivity() {
 
@@ -31,10 +31,37 @@ class AssignmentManagerActivity : AppCompatActivity() {
         dialog.setContentView(R.layout.dialog_add_assignment)
 
         val btnAddAssignment : Button = dialog.findViewById(R.id.btnAddAssignment)
+        val etTask : EditText = dialog.findViewById(R.id.etTask)
         val etMember : EditText = dialog.findViewById(R.id.etMember)
         val etAssignmentDate : EditText = dialog.findViewById(R.id.etAssignmentDate)
 
-        btnAddAssignment.setOnClickListener { Toast.makeText(this,"Botón tocado", Toast.LENGTH_SHORT).show() }
+
+
+        btnAddAssignment.setOnClickListener { btnAddAssignmentFunction(etTask,etMember,etAssignmentDate) }
         dialog.show()
+    }
+
+    private fun btnAddAssignmentFunction(etTask: EditText, etMember: EditText, etAssignmentDate: EditText) {
+        val task = etTask.text.toString()
+        val member = etMember.text.toString()
+        val date = etAssignmentDate.text.toString()
+        if (task.isEmpty() || member.isEmpty() || date.isEmpty()){
+            Toast.makeText(this,"You must fill all the fields to add",Toast.LENGTH_SHORT).show()
+        } else {
+            /*
+            val assignment = AssignmentEntity(
+                taskId = task.toLong(),
+                assignmentDate = date.toLong(),
+                completed = false,
+                memberId = member.toLong()
+            )
+            */
+
+            //todo crear asignación
+            Toast.makeText(this,"Assignment created",Toast.LENGTH_SHORT).show()
+            etTask.setText("")
+            etMember.setText("")
+            etAssignmentDate.setText("")
+        }
     }
 }

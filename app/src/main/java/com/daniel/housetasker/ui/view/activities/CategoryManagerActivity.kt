@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.daniel.housetasker.R
+import com.daniel.housetasker.data.database.entities.CategoryEntity
 import com.daniel.housetasker.databinding.ActivityCategoryManagerBinding
 
 class CategoryManagerActivity : AppCompatActivity() {
@@ -33,7 +34,24 @@ class CategoryManagerActivity : AppCompatActivity() {
         val etName : EditText = dialog.findViewById(R.id.etName)
         val etColor : EditText = dialog.findViewById(R.id.etColor)
 
-        btnAddCategory.setOnClickListener { Toast.makeText(this,"Botón tocado",Toast.LENGTH_SHORT).show() }
+        btnAddCategory.setOnClickListener { btnAddCategory(etName,etColor) }
         dialog.show()
+    }
+
+    private fun btnAddCategory(etName: EditText, etColor: EditText) {
+        val name = etName.text.toString()
+        val color = etColor.text.toString()
+        if (name.isEmpty() || color.isEmpty()){
+            Toast.makeText(this,"You must fill all the fields to add",Toast.LENGTH_SHORT).show()
+        } else {
+            val category = CategoryEntity(
+                name = name,
+                color = color
+            )
+            // todo crear categoría
+            Toast.makeText(this,"Category created",Toast.LENGTH_SHORT).show()
+            etName.setText("")
+            etColor.setText("")
+        }
     }
 }
