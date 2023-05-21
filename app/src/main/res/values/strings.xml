@@ -35,4 +35,5 @@
     <string name="assignment_manager">Assignment manager</string>
     <string name="back">Back</string>
     <string name="are_you_sure_to_continue">Are you sure to continue?</string>
+    <string name="id_number">ID number:</string>
 </resources>

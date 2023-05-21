@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.daniel.housetasker.R
 import com.daniel.housetasker.data.database.entities.MemberEntity
 import com.daniel.housetasker.databinding.ActivityMemberManagerBinding
+import com.daniel.housetasker.ui.view.adapters.MemberAdapter
 import com.daniel.housetasker.ui.viewmodel.MemberViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MemberManagerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMemberManagerBinding
-    //private val memberViewModel: MemberViewModel by ViewModels()
+    private lateinit var adapter: MemberAdapter
+    private val membersList: MutableList<MemberEntity> = mutableListOf()
+    private val memberViewModel: MemberViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +35,15 @@ class MemberManagerActivity : AppCompatActivity() {
     private fun initUI() {
         binding.btnAdd.setOnClickListener { showDialogAddMember() }
         binding.btnBack.setOnClickListener { onBackPressed() }
+
+        //Se cargan los miembros
+        memberViewModel.getAllMembers()
+        runOnUiThread {
+            memberViewModel.memberDataModel.observe(this@MemberManagerActivity){
+                it?.let { adapter.updateList(it) }
+            }
+        }
+
     }
 
     private fun showDialogAddMember() {
