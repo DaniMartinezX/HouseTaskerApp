@@ -8,7 +8,7 @@ import com.daniel.housetasker.R
 import com.daniel.housetasker.data.database.entities.MemberEntity
 import com.daniel.housetasker.ui.view.viewholders.MemberViewHolder
 
-class MemberAdapter(private var membersList: List<MemberEntity> = emptyList()) : RecyclerView.Adapter<MemberViewHolder>() {
+class MemberAdapter(private var membersList: List<MemberEntity> = emptyList(), private val onMemberSelected: (Int) -> Unit) : RecyclerView.Adapter<MemberViewHolder>() {
 
     interface  OnItemClickListener{
         fun onItemClick(member: MemberEntity)
@@ -39,5 +39,6 @@ class MemberAdapter(private var membersList: List<MemberEntity> = emptyList()) :
 
     override fun onBindViewHolder(viewholder: MemberViewHolder, position: Int) {
         viewholder.bind(membersList[position])
+        viewholder.itemView.setOnClickListener { onMemberSelected(position) }
     }
 }
