@@ -12,6 +12,6 @@ class MemberViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(memberEntityResponse: MemberEntity){
         binding.tvName.text = memberEntityResponse.name
         binding.tvId.text = memberEntityResponse.id.toString()
-        //todo foto
+        //TODO foto
     }
 }

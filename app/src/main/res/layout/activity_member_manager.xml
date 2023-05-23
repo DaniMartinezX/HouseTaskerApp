@@ -15,20 +15,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/member_manager"
+            android:layout_gravity="center"
             android:textSize="24sp"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
             android:text="Add"
-            android:layout_marginVertical="16dp"/>
+            android:layout_marginVertical="8dp"
+            android:drawableStart="@drawable/ic_add_member"
+            android:layout_gravity="center"
+            android:padding="12dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMembers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:paddingBottom="14dp"/>
 
 
     </LinearLayout>
