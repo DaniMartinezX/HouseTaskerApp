@@ -15,6 +15,7 @@ import android.util.Base64
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -39,6 +40,7 @@ class MemberManagerActivity : AppCompatActivity() {
     private lateinit var adapter: MemberAdapter
     private var membersList: List<MemberEntity> = mutableListOf()
     private val memberViewModel: MemberViewModel by viewModels()
+    var photoUser: String = ""
 
     //Constante para solicitar el permiso de la cámara
     private val CAMERA_PERMISSION_REQUEST_CODE = 1001
@@ -116,19 +118,23 @@ class MemberManagerActivity : AppCompatActivity() {
     private fun onMemberSelected(position:Int){
         val id = membersList[position].id
         val name = membersList[position].name
-        showDialogMemberInfo(name,id.toString())
+        val photo = membersList[position].photo
+        showDialogMemberInfo(name,id.toString(),photo)
     }
 
-    private fun showDialogMemberInfo(name:String, id: String) {
+    private fun showDialogMemberInfo(name:String, id: String, photo: String) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_info_member)
 
         val btnBack : Button = dialog.findViewById(R.id.btnBack)
         val tvName : TextView = dialog.findViewById(R.id.tvName)
         val tvId : TextView = dialog.findViewById(R.id.tvId)
+        val ivPhoto : ImageView = dialog.findViewById(R.id.ivPhoto)
 
         tvName.text = name
         tvId.text = id
+        Picasso.get().load(photo).resize(90,90).into(ivPhoto)
+
 
         btnBack.setOnClickListener { dialog.hide() }
         dialog.show()
@@ -164,7 +170,7 @@ class MemberManagerActivity : AppCompatActivity() {
             // Aquí puedes convertir el Bitmap en un String y cargarlo en Picasso
             val imageString = convertBitmapToString(imageBitmap)
             // Luego, puedes utilizar Picasso para cargar la imagen en tu ImageView
-            //TODO poniéndo la foto
+            photoUser = imageString
             //Picasso.get().load(imageString).into(imageView)
         }
     }
@@ -188,34 +194,38 @@ class MemberManagerActivity : AppCompatActivity() {
 
         val btnAddMember : Button = dialog.findViewById(R.id.btnAddMember)
         val etName : EditText = dialog.findViewById(R.id.etName)
-        val etPhoto : EditText = dialog.findViewById(R.id.etPhoto)
+        val btnPhoto : Button = dialog.findViewById(R.id.btnPhoto)
 
-        // Verifico y solicito el permiso de la cámara
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE)
+        btnPhoto.setOnClickListener {
+            // Verifico y solicito el permiso de la cámara
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE)
+            } else {
+                openCamera()
+            }
+
         }
 
+
         btnAddMember.setOnClickListener {
-            addMember(etName,etPhoto)
+            addMember(etName)
             dialog.hide()}
         dialog.show()
     }
 
-    private fun addMember(etName: EditText, etPhoto: EditText) {
+    private fun addMember(etName: EditText) {
         val nameM = etName.text.toString()
         if (nameM.isEmpty()) {
             Toast.makeText(this, "You must fill all the fields to add", Toast.LENGTH_SHORT).show()
-            etPhoto.setText("")
         } else {
-            val photoM: String = etPhoto.text.toString()
             val member = MemberEntity(
                 name = nameM,
-                photo = photoM
+                photo = photoUser
             )
-
             memberViewModel.insertMember(member)
             membersList = membersList + member // Agregar el nuevo miembro a la lista local
             adapter.updateList(membersList) // Actualizar el adaptador con la nueva lista
+            Toast.makeText(this,"Member created",Toast.LENGTH_SHORT).show()
         }
     }
 

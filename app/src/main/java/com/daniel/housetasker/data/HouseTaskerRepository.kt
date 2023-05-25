@@ -8,6 +8,7 @@ import com.daniel.housetasker.data.database.entities.AssignmentEntity
 import com.daniel.housetasker.data.database.entities.CategoryEntity
 import com.daniel.housetasker.data.database.entities.MemberEntity
 import com.daniel.housetasker.data.database.entities.TaskEntity
+import com.daniel.housetasker.ui.view.objects.ColorObject
 import javax.inject.Inject
 
 class HouseTaskerRepository @Inject constructor(

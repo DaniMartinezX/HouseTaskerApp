@@ -54,15 +54,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_color"
+
             android:textColor="@color/white"
             android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/etColor"
+        
+        <Spinner
+            android:id="@+id/colorSpinner"
             android:layout_width="180dp"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp" />
+            android:textAlignment="center"
+            android:gravity="center"
+            android:spinnerMode="dialog"
+            android:background="@drawable/color_bloc"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center"
+            android:layout_height="50dp"/>
+
+
     </LinearLayout>
 
     <Button
@@ -73,4 +80,3 @@
         android:text="@string/add"
         android:textSize="16sp" />
 </LinearLayout>
-

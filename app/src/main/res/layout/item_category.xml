@@ -13,9 +13,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/ivPhoto"
+        <FrameLayout
+            android:id="@+id/ivColor"
             android:layout_width="110dp"
+            android:background="@color/black"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
