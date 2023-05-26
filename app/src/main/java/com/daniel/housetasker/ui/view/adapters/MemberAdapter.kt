@@ -12,6 +12,7 @@ import com.daniel.housetasker.ui.view.viewholders.MemberViewHolder
 class MemberAdapter(private var membersList: List<MemberEntity> , private val onMemberSelected: (Int) -> Unit, private val onDeleteClicked: (Int) -> Unit) : RecyclerView.Adapter<MemberViewHolder>() {
 
 
+
     @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<MemberEntity>) {
         membersList = list

@@ -20,5 +20,6 @@
     <color name="red">#92140C</color>
     <color name="text_color">#FFF8F0</color>
     <color name="settings_text_title">#10100F</color>
+    <color name="green">#07B30D</color>
 
 </resources>

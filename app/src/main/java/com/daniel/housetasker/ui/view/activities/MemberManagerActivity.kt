@@ -96,7 +96,7 @@ class MemberManagerActivity : AppCompatActivity() {
                 // Acciones a realizar si el usuario selecciona "Sí"
 
                 // Procedo a eliminarlo
-                memberViewModel.deleteMemberById(id.toString())
+                memberViewModel.deleteMemberById(id)
 
                 // Actualizo la lista y notifico al adapter,
                 // borro el elemento de la lista a mano ya que va a ser borrado igual y

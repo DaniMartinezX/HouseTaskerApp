@@ -38,4 +38,9 @@
     <string name="id_number">ID number:</string>
     <string name="take_a_photo">Take a photo</string>
     <string name="red">Red</string>
+    <string name="creation_date">Creation date:</string>
+    <string name="expiration_date_title">Expiration date:</string>
+    <string name="task_name">Task name:</string>
+    <string name="description_info">Description</string>
+    <string name="status">Status:</string>
 </resources>
