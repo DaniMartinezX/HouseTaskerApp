@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
@@ -123,7 +124,8 @@ class CategoryManagerActivity : AppCompatActivity() {
                     id: Long
                 ) {
                     selectedColor = ColorList().basicColor()[position]
-                    colorHex = "#$selectedColor.hex"
+                    var hexcolor = selectedColor.hex
+                    colorHex = "#$hexcolor"
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -149,6 +151,7 @@ class CategoryManagerActivity : AppCompatActivity() {
                 name = name,
                 color = colorHex
             )
+            Log.i("Daniel",colorHex)
             categoryViewModel.insertCategory(category)
             categoryList = categoryList + category // Agregar el nuevo miembro a la lista local
             adapter.updateList(categoryList)

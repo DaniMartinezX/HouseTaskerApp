@@ -8,6 +8,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -133,7 +134,10 @@ class MemberManagerActivity : AppCompatActivity() {
 
         tvName.text = name
         tvId.text = id
-        Picasso.get().load(photo).resize(90,90).into(ivPhoto)
+
+        val decodedBytes = Base64.decode(photo, Base64.DEFAULT)
+        val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+        ivPhoto.setImageBitmap(bitmap)
 
 
         btnBack.setOnClickListener { dialog.hide() }
@@ -168,9 +172,8 @@ class MemberManagerActivity : AppCompatActivity() {
         if (requestCode == CAMERA_PERMISSION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             // Aquí puedes convertir el Bitmap en un String y cargarlo en Picasso
-            val imageString = convertBitmapToString(imageBitmap)
+            photoUser = convertBitmapToString(imageBitmap)
             // Luego, puedes utilizar Picasso para cargar la imagen en tu ImageView
-            photoUser = imageString
             //Picasso.get().load(imageString).into(imageView)
         }
     }
