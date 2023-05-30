@@ -4,21 +4,29 @@ import android.app.Dialog
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.daniel.housetasker.R
+import com.daniel.housetasker.data.database.entities.CategoryEntity
 import com.daniel.housetasker.data.database.entities.TaskEntity
 import com.daniel.housetasker.databinding.ActivityTaskManagerBinding
 import com.daniel.housetasker.ui.view.adapters.TaskAdapter
+import com.daniel.housetasker.ui.viewmodel.CategoryViewModel
 import com.daniel.housetasker.ui.viewmodel.TaskViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Calendar
 import java.util.Date
 
 @AndroidEntryPoint
@@ -28,6 +36,8 @@ class TaskManagerActivity : AppCompatActivity() {
     private lateinit var adapter: TaskAdapter
     private var tasksList: List<TaskEntity> = mutableListOf()
     private val taskViewModel: TaskViewModel by viewModels()
+    private val categoryViewModel: CategoryViewModel by viewModels()
+    private var categoryListEnt: List<CategoryEntity> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,26 +131,81 @@ class TaskManagerActivity : AppCompatActivity() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_add_task)
 
-        val btnAddTask : Button = dialog.findViewById(R.id.btnAddTask)
-        val etName : EditText = dialog.findViewById(R.id.etName)
-        val etCategory : EditText = dialog.findViewById(R.id.etCategory)
-        val etExpirationDate : EditText = dialog.findViewById(R.id.etExpirationDate)
-        val etDescription : EditText = dialog.findViewById(R.id.etDescription)
+        var idCategory = ""
 
-        btnAddTask.setOnClickListener { addTask(etName,etCategory,etExpirationDate,etDescription) }
+        val spinnerCategory: Spinner = dialog.findViewById(R.id.spinnerCategory)
+        categoryViewModel.getAllCategories()
+        categoryViewModel.categoryDataModel.observe(this) { categories ->
+            categories?.let {
+                categoryListEnt = it
+                val categoryList = it.map { categoryEntity -> categoryEntity.name }
+                val adapterCategory = ArrayAdapter(this, android.R.layout.simple_spinner_item, categoryList)
+                adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerCategory.adapter = adapterCategory
+            }
+        }
+
+
+        var selectedDateInMillisReal: Long = 0
+
+        val dateExpiration: DatePicker = dialog.findViewById(R.id.dateExpiration)
+        var calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH)
+        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+        dateExpiration.init(currentYear, currentMonth, currentDay) { datePicker, year, month, day ->
+            // Se ejecuta cuando se selecciona una fecha
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, month, day)
+            val selectedDateInMillis = selectedDate.timeInMillis
+            selectedDateInMillisReal = selectedDateInMillis
+        }
+        dateExpiration.minDate = calendar.timeInMillis
+
+        val btnAddTask: Button = dialog.findViewById(R.id.btnAddTask)
+        val etName: EditText = dialog.findViewById(R.id.etName)
+        val categorySpinner: Spinner = dialog.findViewById<Spinner?>(R.id.spinnerCategory)
+        val etDescription: EditText = dialog.findViewById(R.id.etDescription)
+
+        val day = dateExpiration.dayOfMonth
+        val month = dateExpiration.month
+        val year = dateExpiration.year
+
+        calendar = Calendar.getInstance()
+        calendar.set(year, month, day)
+
+
+        btnAddTask.setOnClickListener {
+            val categoryName = categorySpinner.selectedItem.toString()
+
+            //Saco el id de la categoría con ese nombre
+            val selectedCategoryId = categoryListEnt.firstOrNull { it.name == categoryName}?.id
+
+            Log.i("Daniel", "$categoryName : ${selectedCategoryId.toString()}")
+            addTask(etName,selectedCategoryId.toString(),selectedDateInMillisReal.toString(),etDescription)
+            dialog.hide()}
         dialog.show()
-    }
+        }
 
-    private fun addTask(etName: EditText, etCategory: EditText, etExpirationDate: EditText, etDescription: EditText) {
-        val idCategory: Long = etCategory.text.toString().toLong()
-        val date = etExpirationDate.text.toString().toLong()
+    private fun addTask(
+        etName: EditText,
+        etCategory: String,
+        etExpirationDate: String,
+        etDescription: EditText
+    ) {
+        val idCategory: Long = etCategory.toLong()
+        val date = etExpirationDate.toLong()
         val name = etName.text.toString()
         val description = etDescription.text.toString()
         //Cojo la fecha actual y la transformo a long para guardarla en la BBDD
         val initialDate: Date = Date()
         val initialDateLong = initialDate.time
-        if (name.isEmpty() || idCategory.toString().isEmpty() || date.toString().isEmpty()){
-            Toast.makeText(this,"You must fill 'name', 'category' and 'date' at least", Toast.LENGTH_SHORT).show()
+        if (name.isEmpty() || idCategory.toString().isEmpty() || date.toString().isEmpty()) {
+            Toast.makeText(
+                this,
+                "You must fill 'name', 'category' and 'date' at least",
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
             val task = TaskEntity(
                 idCategory = idCategory,
@@ -150,10 +215,10 @@ class TaskManagerActivity : AppCompatActivity() {
                 expirationDate = date,
                 completed = false
             )
-            //TODO añadir task
-            Toast.makeText(this,"Task created", Toast.LENGTH_SHORT).show()
+
+            Toast.makeText(this, "Task created", Toast.LENGTH_SHORT).show()
+            Log.i("daniel", tasksList.toString())
         }
     }
 
-
-}
+    }

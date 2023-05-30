@@ -70,6 +70,7 @@ class HouseTaskerRepository @Inject constructor(
     suspend fun modifyColorCategory(id: String, newColor: String){
         categoryDao.modifyColorCategory(id,newColor)
     }
+
     //-----------------------------------------------------------------
     // MEMBERS -----------------------------------------------------
     suspend fun insertMember(member: MemberEntity){

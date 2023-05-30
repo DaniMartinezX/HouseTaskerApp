@@ -19,7 +19,7 @@ class CategoryViewModel @Inject constructor(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val insertCategoryUseCase: InsertCategoryUseCase,
     private val modifyColorCategoryUseCase: ModifyColorCategoryUseCase,
-    private val modifyNameCategoryUseCase: ModifyNameCategoryUseCase
+    private val modifyNameCategoryUseCase: ModifyNameCategoryUseCase,
 ): ViewModel() {
 
     val categoryDataModel = MutableLiveData<List<CategoryEntity>>()
