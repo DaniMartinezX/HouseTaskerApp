@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.DatePicker
@@ -59,12 +58,19 @@ class TaskManagerActivity : AppCompatActivity() {
                 }
             }
         }
-        adapter = TaskAdapter(tasksList,
-        onTaskSelected = {position -> onTaskSelected(position)},
-        onDeleteClicked = {position -> onDeleteClicked(position)})
 
+        categoryViewModel.getAllCategories()
+        categoryViewModel.categoryDataModel.observe(this) { categories ->
+            categories?.let {
+                categoryListEnt = it
+            }
+        }
+        adapter = TaskAdapter(tasksList,
+            onTaskSelected = {position -> onTaskSelected(position)},
+            onDeleteClicked = {position -> onDeleteClicked(position)},)
         binding.rvTasks.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.rvTasks.adapter = adapter
+
     }
 
     private fun onTaskSelected(position: Int) {
@@ -77,11 +83,14 @@ class TaskManagerActivity : AppCompatActivity() {
         val expirationDate = tasksList[position].expirationDate
         val fechaFinal = Date(expirationDate)
         val status = tasksList[position].completed
-        //TODO categoria
-        showDialogTaskInfo(name, description, fechaCreacion.toString(), fechaFinal.toString(), status)
+        val categoryId = tasksList[position].idCategory
+        val selectedCategoryName = categoryListEnt.firstOrNull { it.id == categoryId}?.name
+        if (selectedCategoryName != null) {
+            showDialogTaskInfo(name, description, fechaCreacion.toString(), fechaFinal.toString(), status,selectedCategoryName)
+        }
     }
 
-    private fun showDialogTaskInfo(name: String, description: String, creationDate: String, expirationDate: String, status: Boolean) {
+    private fun showDialogTaskInfo(name: String, description: String, creationDate: String, expirationDate: String, status: Boolean, category: String) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_info_task)
 
@@ -91,12 +100,18 @@ class TaskManagerActivity : AppCompatActivity() {
         val tvExpirationDate : TextView = dialog.findViewById(R.id.tvExpirationDate)
         val tvStatus : TextView = dialog.findViewById(R.id.tvStatus)
         val tvDescription : TextView = dialog.findViewById(R.id.tvDescription)
+        val tvCategory : TextView = dialog.findViewById(R.id.tvCategory)
 
         tvName.text = name
         tvCreationDate.text = creationDate
         tvExpirationDate.text = expirationDate
-        tvStatus.text = status.toString()
+        if (!status){
+            tvStatus.text = "Uncompleted"
+        } else {
+            tvStatus.text = "Completed"
+        }
         tvDescription.text = description
+        tvCategory.text = category
 
         btnBack.setOnClickListener { dialog.hide() }
         dialog.show()
@@ -134,16 +149,11 @@ class TaskManagerActivity : AppCompatActivity() {
         var idCategory = ""
 
         val spinnerCategory: Spinner = dialog.findViewById(R.id.spinnerCategory)
-        categoryViewModel.getAllCategories()
-        categoryViewModel.categoryDataModel.observe(this) { categories ->
-            categories?.let {
-                categoryListEnt = it
-                val categoryList = it.map { categoryEntity -> categoryEntity.name }
-                val adapterCategory = ArrayAdapter(this, android.R.layout.simple_spinner_item, categoryList)
-                adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinnerCategory.adapter = adapterCategory
-            }
-        }
+
+        val categoryList = categoryListEnt.map { categoryEntity -> categoryEntity.name }
+        val adapterCategory = ArrayAdapter(this, android.R.layout.simple_spinner_item, categoryList)
+        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCategory.adapter = adapterCategory
 
 
         var selectedDateInMillisReal: Long = 0
@@ -215,9 +225,11 @@ class TaskManagerActivity : AppCompatActivity() {
                 expirationDate = date,
                 completed = false
             )
-
+            taskViewModel.insertTask(task)
+            tasksList = tasksList + task
+            adapter.updateList(tasksList)
             Toast.makeText(this, "Task created", Toast.LENGTH_SHORT).show()
-            Log.i("daniel", tasksList.toString())
+            Log.i("daniel", task.toString())
         }
     }
 
