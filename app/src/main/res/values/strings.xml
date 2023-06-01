@@ -28,7 +28,7 @@
     <string name="input_category">Category:</string>
     <string name="expiration_date">Expiration:</string>
     <string name="description">Description:</string>
-    <string name="add_new_assignment_here">Add new assignment here</string>
+    <string name="add_new_assignment_here">Create new assignment here</string>
     <string name="input_task">Task:</string>
     <string name="input_member">Member:</string>
     <string name="for_the_day">For the day...</string>
@@ -44,4 +44,11 @@
     <string name="description_info">Description</string>
     <string name="status">Status:</string>
     <string name="category_title">Category:</string>
+    <string name="finish">Finish:</string>
+    <string name="assigned_to">Assigned to:</string>
+    <string name="step1">1.- You must create 1 category and 1 member at least to get start.</string>
+    <string name="step2">2.- Create any task so finally you can create assignments</string>
+    <string name="instructions">Instructions</string>
+    <string name="create_assignment">Create assignment</string>
+    <string name="create">Create</string>
 </resources>

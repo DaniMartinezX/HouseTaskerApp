@@ -22,5 +22,5 @@ data class TaskEntity(
     @ColumnInfo(name = "description") val description : String,
     @ColumnInfo(name = "creation_date") val creationDate : Long,
     @ColumnInfo(name = "expiration_date") val expirationDate : Long,
-    @ColumnInfo(name = "completed") val completed : Boolean
+    @ColumnInfo(name = "completed") var completed : Boolean
 )

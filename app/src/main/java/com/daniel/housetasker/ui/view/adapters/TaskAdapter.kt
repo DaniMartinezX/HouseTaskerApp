@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.daniel.housetasker.R
 import com.daniel.housetasker.data.database.entities.CategoryEntity
@@ -14,6 +15,7 @@ class TaskAdapter(
     private var taskList: List<TaskEntity>,
     private val onTaskSelected: (Int) -> Unit,
     private val onDeleteClicked: (Int) -> Unit,
+    private val onStatusClicked: (Int) -> Unit,
 ) : RecyclerView.Adapter<TaskViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
@@ -34,6 +36,8 @@ class TaskAdapter(
 
     override fun onBindViewHolder(viewholder: TaskViewHolder, position: Int) {
         viewholder.bind(taskList[position])
+        val status = viewholder.itemView.findViewById<LinearLayout>(R.id.colorCompleted)
+        status.setOnClickListener { onStatusClicked(position) }
         viewholder.itemView.setOnClickListener { onTaskSelected(position) }
         //Para el delete
         val ibDelete = viewholder.itemView.findViewById<ImageButton>(R.id.ibDelete)

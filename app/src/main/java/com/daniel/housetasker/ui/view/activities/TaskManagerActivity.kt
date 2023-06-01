@@ -67,11 +67,15 @@ class TaskManagerActivity : AppCompatActivity() {
         }
         adapter = TaskAdapter(tasksList,
             onTaskSelected = {position -> onTaskSelected(position)},
-            onDeleteClicked = {position -> onDeleteClicked(position)},)
+            onDeleteClicked = {position -> onDeleteClicked(position)},
+            onStatusClicked = {position -> onStatusClicked(position)},
+        )
         binding.rvTasks.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         binding.rvTasks.adapter = adapter
 
     }
+
+
 
     private fun onTaskSelected(position: Int) {
         val name = tasksList[position].name
@@ -121,6 +125,11 @@ class TaskManagerActivity : AppCompatActivity() {
     private fun onDeleteClicked(position: Int) {
         val id = tasksList[position].id
         showConfirmationDialogDeleteTask(id.toString(),position)
+    }
+
+    private fun onStatusClicked(position: Int){
+        tasksList[position].completed = !tasksList[position].completed
+        adapter.updateList(tasksList)
     }
 
     private fun showConfirmationDialogDeleteTask(id: String, position: Int) {

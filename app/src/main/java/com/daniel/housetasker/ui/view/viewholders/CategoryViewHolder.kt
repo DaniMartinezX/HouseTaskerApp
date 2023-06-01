@@ -14,7 +14,6 @@ class CategoryViewHolder(view: View, private val colorHex: String) : RecyclerVie
     fun bind(categoryEntityResponse: CategoryEntity){
         binding.tvName.text = categoryEntityResponse.name
         binding.tvId.text = categoryEntityResponse.id.toString()
-        Log.i("dani view holder",categoryEntityResponse.color)
 
         val colorInt = Color.parseColor(categoryEntityResponse.color)
         binding.ivColor.setBackgroundColor(colorInt)

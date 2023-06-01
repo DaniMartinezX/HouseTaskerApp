@@ -8,7 +8,9 @@ import com.daniel.housetasker.databinding.ActivityHomeBinding
 import com.daniel.housetasker.ui.view.fragments.HomeFragment
 import com.daniel.housetasker.ui.view.fragments.ProfileFragment
 import com.daniel.housetasker.ui.view.fragments.SettingsFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
