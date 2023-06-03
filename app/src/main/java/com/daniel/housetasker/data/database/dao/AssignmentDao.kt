@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.daniel.housetasker.data.database.entities.AssignmentEntity
 
 @Dao
@@ -11,6 +12,9 @@ interface AssignmentDao {
 
     @Query("SELECT * FROM assignment_table")
     suspend fun getAllAssignments(): List<AssignmentEntity>
+
+    @Update
+    suspend fun updateAssignment(assignment: AssignmentEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAssignment(assignment: AssignmentEntity)

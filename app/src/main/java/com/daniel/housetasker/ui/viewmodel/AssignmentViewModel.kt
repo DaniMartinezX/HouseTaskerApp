@@ -3,6 +3,7 @@ package com.daniel.housetasker.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.daniel.housetasker.data.database.dao.AssignmentDao
 import com.daniel.housetasker.data.database.entities.AssignmentEntity
 import com.daniel.housetasker.domain.model.assignmentusecases.DeleteAssignmentUseCase
 import com.daniel.housetasker.domain.model.assignmentusecases.GetAllAssignmentUseCase
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AssignmentViewModel @Inject constructor(
+    private val assignmentDao: AssignmentDao,
     private val deleteAssignmentUseCase: DeleteAssignmentUseCase,
     private val getAllAssignmentUseCase: GetAllAssignmentUseCase,
     private val getAssignmentByMemberUseCase: GetAssignmentByMemberUseCase,
@@ -32,6 +34,12 @@ class AssignmentViewModel @Inject constructor(
     fun deleteAssignment(id: String){
         viewModelScope.launch {
             deleteAssignmentUseCase.deleteAssignment(id)
+        }
+    }
+
+    fun updateAssignmentCompletedStatus(assignment: AssignmentEntity) {
+        viewModelScope.launch {
+            assignmentDao.updateAssignment(assignment)
         }
     }
 
